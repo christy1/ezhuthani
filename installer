@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+RUNUSER=`id -nu`
+
+if [ "$RUNUSER" != "root" ]   
+    then
+    echo "This script must be executed as root"
+    exit 1
+else
+	 
+	 cp -Rv ../lekhana/ /usr/share/
+	 mv -v /usr/share/lekhana/lekhana.run /usr/bin/lekhana
+	 cp -v /usr/share/lekhana/lekhana.desktop /usr/share/applications
+	 echo "------------------------------------------------------------------------"
+	 echo "************************************************************************"
+	 echo "------------------------------------------------------------------------"
+	 echo "lekhana is successfully installed under /usr/share/lekhana"
+	 echo "To run type the command 'lekhana' or 'sudo lekhana'"
+fi
