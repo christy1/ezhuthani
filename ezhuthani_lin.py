@@ -267,12 +267,14 @@ class Beditor(wx.Frame):
 				self.statusbar.SetStatusText('', 1)
 				self.modify = False
 				self.SetTitle(window_title + path)
-
-			except IOError, error:
+			
+			# except IOError, error:
+			except IOError:
 				dlg = wx.MessageDialog(self, 'Error opening file/രേഖ തുറക്കാന്‍ കഴിയില്ല\n' + str(error))
 				dlg.ShowModal()
 
-			except UnicodeDecodeError, error:
+			# except UnicodeDecodeError, error:
+			except UnicodeDecodeError:
 				dlg = wx.MessageDialog(self, 'Error opening file/രേഖ തുറക്കാന്‍ കഴിയില്ല\n' + str(error))
 				dlg.ShowModal()
 
@@ -290,7 +292,8 @@ class Beditor(wx.Frame):
 				self.modify = False
 				self.statusbar.SetStatusText('', 1)
 
-			except IOError, error:
+			# except IOError, error:
+			except IOError:
 				dlg = wx.MessageDialog(self, 'Error saving file/രേഖ സംഭരിക്കാൻ കഴിയില്ല\n' + str(error))
 				dlg.ShowModal()
 		else:
@@ -314,7 +317,8 @@ class Beditor(wx.Frame):
 				self.modify = False
 				self.statusbar.SetStatusText('', 1)
 				self.SetTitle(window_title + path)
-			except IOError, error:
+			# except IOError, error:
+			except IOError:
 				dlg = wx.MessageDialog(self, 'Error saving file/രേഖ സംഭരിക്കാൻ കഴിയില്ല\n' + str(error))
 				dlg.ShowModal()
 		save_dlg.Destroy()
