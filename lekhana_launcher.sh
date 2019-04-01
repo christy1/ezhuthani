@@ -1,0 +1,2 @@
+cd lekhana
+sudo lekhana
