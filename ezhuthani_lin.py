@@ -1,32 +1,27 @@
 ﻿#!/usr/bin/env python
 # coding: utf-8
-## beditor.py
+# ezhuthani_lin.py
 
-##################################################################################################
-##					Copyright 2013 IIITMK					##                                  
-##												##
-##      This file is part of ലേഖന : A Malayalam Phonetic Text Editor for GNU/Linux Systems	##
-##												##	
-##      ML_Editor is FREE software; you can redistribute it and/or modify			##
-##      it under the terms of the GNU General Public License as published by			##
-##      the Free Software Foundation; either version 3 of the License, or			##
-##      (at your option) any later version.							##
-##       											##
-##      This program is distributed in the hope that it will be useful,				##
-##      but WITHOUT ANY WARRANTY; without even the implied warranty of				##
-##      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the				##
-##      GNU General Public License for more details.						##
-##       											##
-##      You can find the GNU General Public License on <http://www.gnu.org/licenses/> 		##
-##################################################################################################
-
-
+###############################################################################################
+##      എഴുത്താണി  is a FREE software; you can redistribute it and/or modify                 ##   
+##      it under the terms of the GNU General Public License as published by                 ##
+##      the Free Software Foundation; either version 3 of the License, or                    ##   
+##      (at your option) any later version.                                                  ##          
+##                                                                                           ##   
+##      This program is distributed in the hope that it will be useful,                      ##
+##      but WITHOUT ANY WARRANTY; without even the implied warranty of                       ##
+##      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                                 ##
+##      See the GNU General Public License for more details.                                 ##
+##                                                                                           ## 
+##      You should have received a copy of the GNU General Public License                    ##
+##      along with എഴുത്താണി . If not, see <http://www.gnu.org/licenses/>.                   ##
+###############################################################################################
 
 import wx
 import os
 import engine
 
-window_title = 'IIITMK ലേഖന'
+window_title = 'എഴുത്താണി'
 
 stockUndo = ['']
 stockRedo = []
@@ -36,7 +31,7 @@ class Beditor(wx.Frame):
 	def __init__(self, parent, id, title):
 		wx.Frame.__init__(self, parent, id, title, size=(800,600))
 		
-		self.SetIcon(wx.Icon('/usr/share/lekhana/icons/icon.png', wx.BITMAP_TYPE_PNG))
+		self.SetIcon(wx.Icon('/usr/share/ezhuthani/icons/icon.png', wx.BITMAP_TYPE_PNG))
 
 		## variables
 		self.modify = False
@@ -50,50 +45,50 @@ class Beditor(wx.Frame):
 		file = wx.Menu()
 		#new = wx.MenuItem(file, 101, '&New\tCtrl+N', 'Creates a new document')
 		new = wx.MenuItem(file, 101, '&New/പുതിയത്\tCtrl+N', 'Creates a new document/ പുതിയ ഡോക്യുമെൻറ് ഉണ്ടാക്കുന്നു')
-		new.SetBitmap(wx.Bitmap('/usr/share/lekhana/icons/document_new.png'))
+		new.SetBitmap(wx.Bitmap('/usr/share/ezhuthani/icons/document_new.png'))
 		file.AppendItem(new)
 
 		open = wx.MenuItem(file, 102, '&Open/തുറക്കുക\tCtrl+O', 'Open an existing file')
-		open.SetBitmap(wx.Bitmap('/usr/share/lekhana/icons/document_open.png'))
+		open.SetBitmap(wx.Bitmap('/usr/share/ezhuthani/icons/document_open.png'))
 		file.AppendItem(open)
 		file.AppendSeparator()
 
 		save = wx.MenuItem(file, 103, '&Save/സംഭരിക്കുക\tCtrl+S', 'Save the file')
-		save.SetBitmap(wx.Bitmap('/usr/share/lekhana/icons/document_save.png'))
+		save.SetBitmap(wx.Bitmap('/usr/share/ezhuthani/icons/document_save.png'))
 		file.AppendItem(save)
 
 		saveas = wx.MenuItem(file, 104, 'Save &As.../വേറേതായി സംഭരിക്കുക...\tShift+Ctrl+S', 'Save the file with a different name')
-		saveas.SetBitmap(wx.Bitmap('/usr/share/lekhana/icons/document_saveas.png'))
+		saveas.SetBitmap(wx.Bitmap('/usr/share/ezhuthani/icons/document_saveas.png'))
 		file.AppendItem(saveas)
 		file.AppendSeparator()
 
 		quit = wx.MenuItem(file, 105, '&Quit/പുറത്തു പോകുക\tCtrl+Q', 'Quit the Application')
-		quit.SetBitmap(wx.Bitmap('/usr/share/lekhana/icons/close.png'))
+		quit.SetBitmap(wx.Bitmap('/usr/share/ezhuthani/icons/close.png'))
 		file.AppendItem(quit)
 
 		edit = wx.Menu()
 		cut = wx.MenuItem(edit, 106, '&Cut/മുറിയ്ക്കുക\tCtrl+X', 'Cut the Selection')
-		cut.SetBitmap(wx.Bitmap('/usr/share/lekhana/icons/edit_cut.png'))
+		cut.SetBitmap(wx.Bitmap('/usr/share/ezhuthani/icons/edit_cut.png'))
 		edit.AppendItem(cut)
 
 		copy = wx.MenuItem(edit, 107, '&Copy/പകർത്തുക\tCtrl+C', 'Copy the Selection')
-		copy.SetBitmap(wx.Bitmap('/usr/share/lekhana/icons/edit_copy.png'))
+		copy.SetBitmap(wx.Bitmap('/usr/share/ezhuthani/icons/edit_copy.png'))
 		edit.AppendItem(copy)
 
 		paste = wx.MenuItem(edit, 108, '&Paste/ഒട്ടിക്കുക\tCtrl+V', 'Paste text from clipboard')
-		paste.SetBitmap(wx.Bitmap('/usr/share/lekhana/icons/edit_paste.png'))
+		paste.SetBitmap(wx.Bitmap('/usr/share/ezhuthani/icons/edit_paste.png'))
 		edit.AppendItem(paste)
 
 		delete = wx.MenuItem(edit, 109, '&Delete/കളയുക', 'Delete the selected text')
-		delete.SetBitmap(wx.Bitmap('/usr/share/lekhana/icons/edit_delete.png',))
+		delete.SetBitmap(wx.Bitmap('/usr/share/ezhuthani/icons/edit_delete.png',))
 
 		edit.AppendItem(delete)
 		edit.AppendSeparator()
 		
 		undo = wx.MenuItem(edit, 113, '&Undo/പിൻവലിക്കുക\tCtrl+Z','Undo last change')
-		undo.SetBitmap(wx.Bitmap('/usr/share/lekhana/icons/arrow_undo.png'))
+		undo.SetBitmap(wx.Bitmap('/usr/share/ezhuthani/icons/arrow_undo.png'))
 		redo = wx.MenuItem(edit, 114, '&Redo/ആവർത്തിക്കുക\tCtrl+Y', 'Redo last Undo')
-		redo.SetBitmap(wx.Bitmap('/usr/share/lekhana/icons/arrow_redo.png'))
+		redo.SetBitmap(wx.Bitmap('/usr/share/ezhuthani/icons/arrow_redo.png'))
 
 		edit.AppendItem(undo)
 		edit.AppendItem(redo)
@@ -108,7 +103,7 @@ class Beditor(wx.Frame):
 		view.AppendSeparator()
 		
 		fontsel = wx.MenuItem(view, 501, 'Select &Font/ലിപി തിരഞ്ഞെടുക്കുക', 'Select Font to use in the current document')
-		fontsel.SetBitmap(wx.Bitmap('/usr/share/lekhana/icons/font.png'))
+		fontsel.SetBitmap(wx.Bitmap('/usr/share/ezhuthani/icons/font.png'))
 		view.AppendItem(fontsel)
 
 		view.AppendSeparator()
@@ -116,12 +111,12 @@ class Beditor(wx.Frame):
 		self.convert = view.Append(503, '&Halt Conversion/ലിപ്യന്തരണം നിർത്തുക\tF11', 'Stops the conversion to Malayalam for the current word(s)', kind = wx.ITEM_CHECK)      
 
 		help = wx.Menu()
-		about = wx.MenuItem(help, 112, '&About/സംബന്ധിച്ച്‌', 'About lekhana/ലേഖനയെക്കുറിച്ച്')
-		about.SetBitmap(wx.Bitmap('/usr/share/lekhana/icons/about.png'))
+		about = wx.MenuItem(help, 112, '&About/സംബന്ധിച്ച്‌', 'About ezhuthani/എഴുത്താണിയെക്കുറിച്ച്')
+		about.SetBitmap(wx.Bitmap('/usr/share/ezhuthani/icons/about.png'))
 		help.AppendItem(about)
 		
 		layout_help = wx.MenuItem(help, 502, '&Layout Help/ലിപി രൂപരേഖ സഹായം\tF1', 'Get Help on Key Layout')
-		layout_help.SetBitmap(wx.Bitmap('/usr/share/lekhana/icons/help.png'))
+		layout_help.SetBitmap(wx.Bitmap('/usr/share/ezhuthani/icons/help.png'))
 		help.AppendItem(layout_help)		
 
 
@@ -152,40 +147,40 @@ class Beditor(wx.Frame):
 		
 		## setting up toolbar
 		self.toolbar = self.CreateToolBar( wx.TB_HORIZONTAL | wx.NO_BORDER | wx.TB_FLAT | wx.TB_TEXT )
-		self.toolbar.AddSimpleTool(801, wx.Bitmap('/usr/share/lekhana/icons/document_new.png'), 'New/പുതിയത്', '')
-		self.toolbar.AddSimpleTool(802, wx.Bitmap('/usr/share/lekhana/icons/document_open.png'), 'Open/തുറക്കുക', '')
-		self.toolbar.AddSimpleTool(803, wx.Bitmap('/usr/share/lekhana/icons/document_save.png'), 'Save/സംഭരിക്കുക', '')
+		self.toolbar.AddSimpleTool(801, wx.Bitmap('/usr/share/ezhuthani/icons/document_new.png'), 'New/പുതിയത്', '')
+		self.toolbar.AddSimpleTool(802, wx.Bitmap('/usr/share/ezhuthani/icons/document_open.png'), 'Open/തുറക്കുക', '')
+		self.toolbar.AddSimpleTool(803, wx.Bitmap('/usr/share/ezhuthani/icons/document_save.png'), 'Save/സംഭരിക്കുക', '')
 		self.toolbar.AddSeparator()
 		
-		self.toolbar.AddSimpleTool(804, wx.Bitmap('/usr/share/lekhana/icons/edit_cut.png'), 'Cut/മുറിയ്ക്കുക', '')
-		self.toolbar.AddSimpleTool(805, wx.Bitmap('/usr/share/lekhana/icons/edit_copy.png'), 'Copy/പകർത്തുക', '')
-		self.toolbar.AddSimpleTool(806, wx.Bitmap('/usr/share/lekhana/icons/edit_paste.png'), 'Paste/ഒട്ടിക്കുക', '')
+		self.toolbar.AddSimpleTool(804, wx.Bitmap('/usr/share/ezhuthani/icons/edit_cut.png'), 'Cut/മുറിയ്ക്കുക', '')
+		self.toolbar.AddSimpleTool(805, wx.Bitmap('/usr/share/ezhuthani/icons/edit_copy.png'), 'Copy/പകർത്തുക', '')
+		self.toolbar.AddSimpleTool(806, wx.Bitmap('/usr/share/ezhuthani/icons/edit_paste.png'), 'Paste/ഒട്ടിക്കുക', '')
 		self.toolbar.AddSeparator()
 		
-		self.toolbar.AddSimpleTool(808, wx.Bitmap('/usr/share/lekhana/icons/undo_red.png'), 'Undo/പിൻവലിക്കുക (CTRL+Z)', '')
-		self.toolbar.AddSimpleTool(809, wx.Bitmap('/usr/share/lekhana/icons/redo_red.png'), 'Redo/ആവർത്തിക്കുക (CTRL+Y)', '')
+		self.toolbar.AddSimpleTool(808, wx.Bitmap('/usr/share/ezhuthani/icons/undo_red.png'), 'Undo/പിൻവലിക്കുക (CTRL+Z)', '')
+		self.toolbar.AddSimpleTool(809, wx.Bitmap('/usr/share/ezhuthani/icons/redo_red.png'), 'Redo/ആവർത്തിക്കുക (CTRL+Y)', '')
 		self.toolbar.AddSeparator()
 
-		self.toolbar.AddSimpleTool(501, wx.Bitmap('/usr/share/lekhana/icons/font.png'), 'Select Font/ലിപി തിരഞ്ഞെടുക്കുക', '')
-		self.toolbar.AddSimpleTool(502, wx.Bitmap('/usr/share/lekhana/icons/help.png'), 'Layout Help/ലിപി രൂപരേഖ സഹായം', '')
+		self.toolbar.AddSimpleTool(501, wx.Bitmap('/usr/share/ezhuthani/icons/font.png'), 'Select Font/ലിപി തിരഞ്ഞെടുക്കുക', '')
+		self.toolbar.AddSimpleTool(502, wx.Bitmap('/usr/share/ezhuthani/icons/help.png'), 'Layout Help/ലിപി രൂപരേഖ സഹായം', '')
 		
 		self.toolbar.AddSeparator()
 		
-		self.toolbar.AddCheckTool(504, wx.Bitmap('/usr/share/lekhana/icons/cancel.png'),shortHelp='Halt Conversion/ലിപ്യന്തരണം നിർത്തുക (F11)',longHelp='If active, stops the conversion to Malayalam for current word(s)')
+		self.toolbar.AddCheckTool(504, wx.Bitmap('/usr/share/ezhuthani/icons/cancel.png'),shortHelp='Halt Conversion/ലിപ്യന്തരണം നിർത്തുക (F11)',longHelp='If active, stops the conversion to Malayalam for current word(s)')
 		
 		self.toolbar.AddSeparator()
 		
-		self.toolbar.AddSimpleTool(810, wx.Bitmap('/usr/share/lekhana/icons/edit_alignment_left.png'), 'Align Left/ഇടത്തേയ്ക്കാക്കുക')
-		self.toolbar.AddSimpleTool(811, wx.Bitmap('/usr/share/lekhana/icons/edit_alignment_center.png'), 'Align Center/നടുവിലേയ്ക്കാക്കുക')
-		self.toolbar.AddSimpleTool(812, wx.Bitmap('/usr/share/lekhana/icons/edit_alignment_right.png'), 'Align Right/വലത്തേയ്ക്കാക്കുക')
+		self.toolbar.AddSimpleTool(810, wx.Bitmap('/usr/share/ezhuthani/icons/edit_alignment_left.png'), 'Align Left/ഇടത്തേയ്ക്കാക്കുക')
+		self.toolbar.AddSimpleTool(811, wx.Bitmap('/usr/share/ezhuthani/icons/edit_alignment_center.png'), 'Align Center/നടുവിലേയ്ക്കാക്കുക')
+		self.toolbar.AddSimpleTool(812, wx.Bitmap('/usr/share/ezhuthani/icons/edit_alignment_right.png'), 'Align Right/വലത്തേയ്ക്കാക്കുക')
 		self.toolbar.AddSeparator()		
 
-		self.toolbar.AddSimpleTool(813, wx.Bitmap('/usr/share/lekhana/icons/edit_bold.png'), 'Bold/കടുപ്പത്തിലാക്കുക')
-		self.toolbar.AddSimpleTool(814, wx.Bitmap('/usr/share/lekhana/icons/edit_italic.png'), 'Italics/ചരിച്ചെഴുതുക')
-		self.toolbar.AddSimpleTool(815, wx.Bitmap('/usr/share/lekhana/icons/edit_underline.png'), 'Underline/അടിവരയിടുക')
+		self.toolbar.AddSimpleTool(813, wx.Bitmap('/usr/share/ezhuthani/icons/edit_bold.png'), 'Bold/കടുപ്പത്തിലാക്കുക')
+		self.toolbar.AddSimpleTool(814, wx.Bitmap('/usr/share/ezhuthani/icons/edit_italic.png'), 'Italics/ചരിച്ചെഴുതുക')
+		self.toolbar.AddSimpleTool(815, wx.Bitmap('/usr/share/ezhuthani/icons/edit_underline.png'), 'Underline/അടിവരയിടുക')
 		self.toolbar.AddSeparator()		
 
-		self.toolbar.AddSimpleTool(807, wx.Bitmap('/usr/share/lekhana/icons/close.png'), 'Exit/പുറത്തു പോകുക', '')
+		self.toolbar.AddSimpleTool(807, wx.Bitmap('/usr/share/ezhuthani/icons/close.png'), 'Exit/പുറത്തു പോകുക', '')
 		
 		self.toolbar.Realize()
 		
@@ -402,7 +397,7 @@ class Beditor(wx.Frame):
 	def LayoutHelp(self, event):
 		info = wx.AboutDialogInfo()
 
-		info.SetIcon(wx.Icon('/usr/share/lekhana/icons/lekhana.png', wx.BITMAP_TYPE_PNG))
+		info.SetIcon(wx.Icon('/usr/share/ezhuthani/icons/ezhuthani.png', wx.BITMAP_TYPE_PNG))
 		info.SetName('Layout')
 		wx.AboutBox(info)
 		
@@ -420,33 +415,33 @@ class Beditor(wx.Frame):
 
 	def OnAbout(self, event):
 
-		description = """﻿ലേഖന """ """\n A Malayalam Phonetic Text Editor for GNU/Linux systems\n"""
+		description = """എഴുത്താണി""" """\n A Malayalam Phonetic Text Editor for GNU/Linux systems\n"""
 
 		licence = """		
-		ലേഖന is a FREE software; you can redistribute it and/or modify it under the 
+		എഴുത്താണി is a FREE software; you can redistribute it and/or modify it under the 
                 terms of the GNU General Public License as published by the Free Software Foundation; 
                 either version 3 of the License, or (at your option) any later version.
 		
-		ലേഖന is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+		എഴുത്താണി is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
 		without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
 		PURPOSE.  See the GNU General Public License for more details. You should have received 
-		a copy of the GNU General Public License along with ലേഖന ; if not, write to the Free 
+		a copy of the GNU General Public License along with എഴുത്താണി ; if not, write to the Free 
 		Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  0211"""
 
 		info = wx.AboutDialogInfo()
 		
-		info.SetIcon(wx.Icon('/usr/share/lekhana/icons/logo.png', wx.BITMAP_TYPE_PNG))
-		info.SetName('ലേഖന')
+		info.SetIcon(wx.Icon('/usr/share/ezhuthani/icons/logo.png', wx.BITMAP_TYPE_PNG))
+		info.SetName('എഴുത്താണി')
 		info.SetVersion('0.1')
 		info.SetDescription(description)
-		info.SetCopyright('Developed by IIITM-K Trivandrum')
-		info.SetWebSite('http://www.iiitmk.ac.in/vrclc/')
+		info.SetCopyright('LGPL')
+		info.SetWebSite('')
 		info.SetLicence(licence)
-		info.AddDeveloper('Christy , Arun')
-		info.AddDocWriter('Arun, Christy')
-		info.AddArtist('The IIITMK crew :-)')
+		info.AddDeveloper('Team Ezhuthani')
+		info.AddDocWriter('Team Ezhuthani')
+		info.AddArtist(':)')
 				
-		info.SetName('ലേഖന')
+		info.SetName('എഴുത്താണി')
 		wx.AboutBox(info)
 		
 		

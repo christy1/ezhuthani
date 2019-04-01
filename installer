@@ -8,12 +8,12 @@ if [ "$RUNUSER" != "root" ]
     exit 1
 else
 	 
-	 cp -Rv ../lekhana/ /usr/share/
-	 mv -v /usr/share/lekhana/lekhana.run /usr/bin/lekhana
-	 cp -v /usr/share/lekhana/lekhana.desktop /usr/share/applications
+	 cp -Rv ../ezhuthani/ /usr/share/
+	 mv -v /usr/share/ezhuthani/ezhuthani.run /usr/bin/ezhuthani
+	 cp -v /usr/share/ezhuthani/ezhuthani.desktop /usr/share/applications
 	 echo "------------------------------------------------------------------------"
 	 echo "************************************************************************"
 	 echo "------------------------------------------------------------------------"
-	 echo "lekhana is successfully installed under /usr/share/lekhana"
-	 echo "To run type the command 'lekhana' or 'sudo lekhana'"
+	 echo "ezhuthani is successfully installed under /usr/share/ezhuthani"
+	 echo "To run type the command 'ezhuthani' or 'sudo ezhuthani'"
 fi
