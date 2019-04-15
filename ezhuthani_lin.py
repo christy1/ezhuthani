@@ -17,6 +17,8 @@
 ##      along with എഴുത്താണി . If not, see <http://www.gnu.org/licenses/>.                   ##
 ###############################################################################################
 
+# e.g.https://wiki.wxpython.org/Getting%20Started#Building_a_simple_text_editor
+
 import wx
 import os
 import engine
