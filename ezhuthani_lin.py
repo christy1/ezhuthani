@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python
+﻿#!/usr/bin/python
 # coding: utf-8
 # ezhuthani_lin.py
 
@@ -27,11 +27,15 @@ stockUndo = ['']
 stockRedo = []
 depth = 10			## Default Undo-Redo Depth
 
-class Beditor(wx.Frame):
+class ezhuthani(wx.Frame):
 	def __init__(self, parent, id, title):
 		wx.Frame.__init__(self, parent, id, title, size=(800,600))
+
+		foldername = os.getcwd()
+		rel_path = "icons"
 		
-		self.SetIcon(wx.Icon('/usr/share/ezhuthani/icons/icon.png', wx.BITMAP_TYPE_PNG))
+		# self.SetIcon(wx.Icon(os.path.join(foldername,rel_path,'icon.png'), wx.BITMAP_TYPE_PNG))
+		self.SetIcon(wx.Icon(os.path.join(foldername,rel_path,'icon.png'), wx.BITMAP_TYPE_PNG))
 
 		## variables
 		self.modify = False
@@ -45,53 +49,53 @@ class Beditor(wx.Frame):
 		file = wx.Menu()
 		#new = wx.MenuItem(file, 101, '&New\tCtrl+N', 'Creates a new document')
 		new = wx.MenuItem(file, 101, '&New/പുതിയത്\tCtrl+N', 'Creates a new document/ പുതിയ ഡോക്യുമെൻറ് ഉണ്ടാക്കുന്നു')
-		new.SetBitmap(wx.Bitmap('/usr/share/ezhuthani/icons/document_new.png'))
-		file.AppendItem(new)
+		new.SetBitmap(wx.Bitmap(os.path.join(foldername,rel_path,'document_new.png')))
+		file.Append(new)
 
 		open = wx.MenuItem(file, 102, '&Open/തുറക്കുക\tCtrl+O', 'Open an existing file')
-		open.SetBitmap(wx.Bitmap('/usr/share/ezhuthani/icons/document_open.png'))
-		file.AppendItem(open)
+		open.SetBitmap(wx.Bitmap(os.path.join(foldername,rel_path,'document_open.png')))
+		file.Append(open)
 		file.AppendSeparator()
 
 		save = wx.MenuItem(file, 103, '&Save/സംഭരിക്കുക\tCtrl+S', 'Save the file')
-		save.SetBitmap(wx.Bitmap('/usr/share/ezhuthani/icons/document_save.png'))
-		file.AppendItem(save)
+		save.SetBitmap(wx.Bitmap(os.path.join(foldername,rel_path,'document_save.png')))
+		file.Append(save)
 
 		saveas = wx.MenuItem(file, 104, 'Save &As.../വേറേതായി സംഭരിക്കുക...\tShift+Ctrl+S', 'Save the file with a different name')
-		saveas.SetBitmap(wx.Bitmap('/usr/share/ezhuthani/icons/document_saveas.png'))
-		file.AppendItem(saveas)
+		saveas.SetBitmap(wx.Bitmap(os.path.join(foldername,rel_path,'document_saveas.png')))
+		file.Append(saveas)
 		file.AppendSeparator()
 
 		quit = wx.MenuItem(file, 105, '&Quit/പുറത്തു പോകുക\tCtrl+Q', 'Quit the Application')
-		quit.SetBitmap(wx.Bitmap('/usr/share/ezhuthani/icons/close.png'))
-		file.AppendItem(quit)
+		quit.SetBitmap(wx.Bitmap(os.path.join(foldername,rel_path,'close.png')))
+		file.Append(quit)
 
 		edit = wx.Menu()
 		cut = wx.MenuItem(edit, 106, '&Cut/മുറിയ്ക്കുക\tCtrl+X', 'Cut the Selection')
-		cut.SetBitmap(wx.Bitmap('/usr/share/ezhuthani/icons/edit_cut.png'))
-		edit.AppendItem(cut)
+		cut.SetBitmap(wx.Bitmap(os.path.join(foldername,rel_path,'edit_cut.png')))
+		edit.Append(cut)
 
 		copy = wx.MenuItem(edit, 107, '&Copy/പകർത്തുക\tCtrl+C', 'Copy the Selection')
-		copy.SetBitmap(wx.Bitmap('/usr/share/ezhuthani/icons/edit_copy.png'))
-		edit.AppendItem(copy)
+		copy.SetBitmap(wx.Bitmap(os.path.join(foldername,rel_path,'edit_copy.png')))
+		edit.Append(copy)
 
 		paste = wx.MenuItem(edit, 108, '&Paste/ഒട്ടിക്കുക\tCtrl+V', 'Paste text from clipboard')
-		paste.SetBitmap(wx.Bitmap('/usr/share/ezhuthani/icons/edit_paste.png'))
-		edit.AppendItem(paste)
+		paste.SetBitmap(wx.Bitmap(os.path.join(foldername,rel_path,'edit_paste.png')))
+		edit.Append(paste)
 
 		delete = wx.MenuItem(edit, 109, '&Delete/കളയുക', 'Delete the selected text')
-		delete.SetBitmap(wx.Bitmap('/usr/share/ezhuthani/icons/edit_delete.png',))
+		delete.SetBitmap(wx.Bitmap(os.path.join(foldername,rel_path,'edit_delete.png'),))
 
-		edit.AppendItem(delete)
+		edit.Append(delete)
 		edit.AppendSeparator()
 		
 		undo = wx.MenuItem(edit, 113, '&Undo/പിൻവലിക്കുക\tCtrl+Z','Undo last change')
-		undo.SetBitmap(wx.Bitmap('/usr/share/ezhuthani/icons/arrow_undo.png'))
+		undo.SetBitmap(wx.Bitmap(os.path.join(foldername,rel_path,'arrow_undo.png')))
 		redo = wx.MenuItem(edit, 114, '&Redo/ആവർത്തിക്കുക\tCtrl+Y', 'Redo last Undo')
-		redo.SetBitmap(wx.Bitmap('/usr/share/ezhuthani/icons/arrow_redo.png'))
+		redo.SetBitmap(wx.Bitmap(os.path.join(foldername,rel_path,'arrow_redo.png')))
 
-		edit.AppendItem(undo)
-		edit.AppendItem(redo)
+		edit.Append(undo)
+		edit.Append(redo)
 		
 		edit.AppendSeparator()
 		
@@ -103,8 +107,8 @@ class Beditor(wx.Frame):
 		view.AppendSeparator()
 		
 		fontsel = wx.MenuItem(view, 501, 'Select &Font/ലിപി തിരഞ്ഞെടുക്കുക', 'Select Font to use in the current document')
-		fontsel.SetBitmap(wx.Bitmap('/usr/share/ezhuthani/icons/font.png'))
-		view.AppendItem(fontsel)
+		fontsel.SetBitmap(wx.Bitmap(os.path.join(foldername,rel_path,'font.png')))
+		view.Append(fontsel)
 
 		view.AppendSeparator()
 		
@@ -112,12 +116,12 @@ class Beditor(wx.Frame):
 
 		help = wx.Menu()
 		about = wx.MenuItem(help, 112, '&About/സംബന്ധിച്ച്‌', 'About ezhuthani/എഴുത്താണിയെക്കുറിച്ച്')
-		about.SetBitmap(wx.Bitmap('/usr/share/ezhuthani/icons/about.png'))
-		help.AppendItem(about)
+		about.SetBitmap(wx.Bitmap(os.path.join(foldername,rel_path,'about.png')))
+		help.Append(about)
 		
 		layout_help = wx.MenuItem(help, 502, '&Layout Help/ലിപി രൂപരേഖ സഹായം\tF1', 'Get Help on Key Layout')
-		layout_help.SetBitmap(wx.Bitmap('/usr/share/ezhuthani/icons/help.png'))
-		help.AppendItem(layout_help)		
+		layout_help.SetBitmap(wx.Bitmap(os.path.join(foldername,rel_path,'help.png')))
+		help.Append(layout_help)		
 
 
 		menubar.Append(file, '&File/രേഖ')
@@ -147,40 +151,40 @@ class Beditor(wx.Frame):
 		
 		## setting up toolbar
 		self.toolbar = self.CreateToolBar( wx.TB_HORIZONTAL | wx.NO_BORDER | wx.TB_FLAT | wx.TB_TEXT )
-		self.toolbar.AddSimpleTool(801, wx.Bitmap('/usr/share/ezhuthani/icons/document_new.png'), 'New/പുതിയത്', '')
-		self.toolbar.AddSimpleTool(802, wx.Bitmap('/usr/share/ezhuthani/icons/document_open.png'), 'Open/തുറക്കുക', '')
-		self.toolbar.AddSimpleTool(803, wx.Bitmap('/usr/share/ezhuthani/icons/document_save.png'), 'Save/സംഭരിക്കുക', '')
+		self.toolbar.AddTool(801, wx.Bitmap(os.path.join(foldername,rel_path,'document_new.png')), 'New/പുതിയത്', '')
+		self.toolbar.AddTool(802, wx.Bitmap(os.path.join(foldername,rel_path,'document_open.png')), 'Open/തുറക്കുക', '')
+		self.toolbar.AddTool(803, wx.Bitmap(os.path.join(foldername,rel_path,'document_save.png')), 'Save/സംഭരിക്കുക', '')
 		self.toolbar.AddSeparator()
 		
-		self.toolbar.AddSimpleTool(804, wx.Bitmap('/usr/share/ezhuthani/icons/edit_cut.png'), 'Cut/മുറിയ്ക്കുക', '')
-		self.toolbar.AddSimpleTool(805, wx.Bitmap('/usr/share/ezhuthani/icons/edit_copy.png'), 'Copy/പകർത്തുക', '')
-		self.toolbar.AddSimpleTool(806, wx.Bitmap('/usr/share/ezhuthani/icons/edit_paste.png'), 'Paste/ഒട്ടിക്കുക', '')
+		self.toolbar.AddTool(804, wx.Bitmap(os.path.join(foldername,rel_path,'edit_cut.png')), 'Cut/മുറിയ്ക്കുക', '')
+		self.toolbar.AddTool(805, wx.Bitmap(os.path.join(foldername,rel_path,'edit_copy.png')), 'Copy/പകർത്തുക', '')
+		self.toolbar.AddTool(806, wx.Bitmap(os.path.join(foldername,rel_path,'edit_paste.png')), 'Paste/ഒട്ടിക്കുക', '')
 		self.toolbar.AddSeparator()
 		
-		self.toolbar.AddSimpleTool(808, wx.Bitmap('/usr/share/ezhuthani/icons/undo_red.png'), 'Undo/പിൻവലിക്കുക (CTRL+Z)', '')
-		self.toolbar.AddSimpleTool(809, wx.Bitmap('/usr/share/ezhuthani/icons/redo_red.png'), 'Redo/ആവർത്തിക്കുക (CTRL+Y)', '')
+		self.toolbar.AddTool(808, wx.Bitmap(os.path.join(foldername,rel_path,'undo_red.png')), 'Undo/പിൻവലിക്കുക (CTRL+Z)', '')
+		self.toolbar.AddTool(809, wx.Bitmap(os.path.join(foldername,rel_path,'redo_red.png')), 'Redo/ആവർത്തിക്കുക (CTRL+Y)', '')
 		self.toolbar.AddSeparator()
 
-		self.toolbar.AddSimpleTool(501, wx.Bitmap('/usr/share/ezhuthani/icons/font.png'), 'Select Font/ലിപി തിരഞ്ഞെടുക്കുക', '')
-		self.toolbar.AddSimpleTool(502, wx.Bitmap('/usr/share/ezhuthani/icons/help.png'), 'Layout Help/ലിപി രൂപരേഖ സഹായം', '')
+		self.toolbar.AddTool(501, wx.Bitmap(os.path.join(foldername,rel_path,'font.png')), 'Select Font/ലിപി തിരഞ്ഞെടുക്കുക', '')
+		self.toolbar.AddTool(502, wx.Bitmap(os.path.join(foldername,rel_path,'help.png')), 'Layout Help/ലിപി രൂപരേഖ സഹായം', '')
 		
 		self.toolbar.AddSeparator()
 		
-		self.toolbar.AddCheckTool(504, wx.Bitmap('/usr/share/ezhuthani/icons/cancel.png'),shortHelp='Halt Conversion/ലിപ്യന്തരണം നിർത്തുക (F11)',longHelp='If active, stops the conversion to Malayalam for current word(s)')
+		self.toolbar.AddCheckTool(504, wx.Bitmap(os.path.join(foldername,rel_path,'cancel.png')),shortHelp='Halt Conversion/ലിപ്യന്തരണം നിർത്തുക (F11)',longHelp='If active, stops the conversion to Malayalam for current word(s)')
 		
 		self.toolbar.AddSeparator()
 		
-		self.toolbar.AddSimpleTool(810, wx.Bitmap('/usr/share/ezhuthani/icons/edit_alignment_left.png'), 'Align Left/ഇടത്തേയ്ക്കാക്കുക')
-		self.toolbar.AddSimpleTool(811, wx.Bitmap('/usr/share/ezhuthani/icons/edit_alignment_center.png'), 'Align Center/നടുവിലേയ്ക്കാക്കുക')
-		self.toolbar.AddSimpleTool(812, wx.Bitmap('/usr/share/ezhuthani/icons/edit_alignment_right.png'), 'Align Right/വലത്തേയ്ക്കാക്കുക')
+		self.toolbar.AddTool(810, wx.Bitmap(os.path.join(foldername,rel_path,'edit_alignment_left.png')), 'Align Left/ഇടത്തേയ്ക്കാക്കുക')
+		self.toolbar.AddTool(811, wx.Bitmap(os.path.join(foldername,rel_path,'edit_alignment_center.png')), 'Align Center/നടുവിലേയ്ക്കാക്കുക')
+		self.toolbar.AddTool(812, wx.Bitmap(os.path.join(foldername,rel_path,'edit_alignment_right.png')), 'Align Right/വലത്തേയ്ക്കാക്കുക')
 		self.toolbar.AddSeparator()		
 
-		self.toolbar.AddSimpleTool(813, wx.Bitmap('/usr/share/ezhuthani/icons/edit_bold.png'), 'Bold/കടുപ്പത്തിലാക്കുക')
-		self.toolbar.AddSimpleTool(814, wx.Bitmap('/usr/share/ezhuthani/icons/edit_italic.png'), 'Italics/ചരിച്ചെഴുതുക')
-		self.toolbar.AddSimpleTool(815, wx.Bitmap('/usr/share/ezhuthani/icons/edit_underline.png'), 'Underline/അടിവരയിടുക')
+		self.toolbar.AddTool(813, wx.Bitmap(os.path.join(foldername,rel_path,'edit_bold.png')), 'Bold/കടുപ്പത്തിലാക്കുക')
+		self.toolbar.AddTool(814, wx.Bitmap(os.path.join(foldername,rel_path,'edit_italic.png')), 'Italics/ചരിച്ചെഴുതുക')
+		self.toolbar.AddTool(815, wx.Bitmap(os.path.join(foldername,rel_path,'edit_underline.png')), 'Underline/അടിവരയിടുക')
 		self.toolbar.AddSeparator()		
 
-		self.toolbar.AddSimpleTool(807, wx.Bitmap('/usr/share/ezhuthani/icons/close.png'), 'Exit/പുറത്തു പോകുക', '')
+		self.toolbar.AddTool(807, wx.Bitmap(os.path.join(foldername,rel_path,'close.png')), 'Exit/പുറത്തു പോകുക', '')
 		
 		self.toolbar.Realize()
 		
@@ -228,7 +232,7 @@ class Beditor(wx.Frame):
 
 	## Class Methods
 	def NewApplication(self, event):
-		editor = Beditor(None, -1, window_title + '[Untitled/പേരു നൽകിയിട്ടില്ല]'  )
+		editor = ezhuthani(None, -1, window_title + '[Untitled/പേരു നൽകിയിട്ടില്ല]'  )
 		editor.Centre()
 		editor.Show()
 
@@ -401,7 +405,7 @@ class Beditor(wx.Frame):
 	def LayoutHelp(self, event):
 		info = wx.AboutDialogInfo()
 
-		info.SetIcon(wx.Icon('/usr/share/ezhuthani/icons/ezhuthani.png', wx.BITMAP_TYPE_PNG))
+		info.SetIcon(wx.Icon(os.path.join(foldername,rel_path,'ezhuthani.png'), wx.BITMAP_TYPE_PNG))
 		info.SetName('Layout')
 		wx.AboutBox(info)
 		
@@ -434,7 +438,7 @@ class Beditor(wx.Frame):
 
 		info = wx.AboutDialogInfo()
 		
-		info.SetIcon(wx.Icon('/usr/share/ezhuthani/icons/logo.png', wx.BITMAP_TYPE_PNG))
+		info.SetIcon(wx.Icon(os.path.join(foldername,rel_path,'logo.png'), wx.BITMAP_TYPE_PNG))
 		info.SetName('എഴുത്താണി')
 		info.SetVersion('0.1')
 		info.SetDescription(description)
@@ -560,5 +564,5 @@ class Beditor(wx.Frame):
 
 
 app = wx.App()
-Beditor(None, -1, window_title + '[Untitled] / പേരു നൽകിയിട്ടില്ല')
+ezhuthani(None, -1, window_title + '[Untitled] / പേരു നൽകിയിട്ടില്ല')
 app.MainLoop()
